@@ -1,0 +1,6 @@
+set(__QT_DEPLOY_TARGET_chess_FILE M:/c++/train,vs2023/chess/build/chess.exe)
+set(__QT_DEPLOY_TARGET_chess_TYPE EXECUTABLE)
+set(__QT_DEPLOY_TARGET_chess_RUNTIME_DLLS )
+set(__QT_DEPLOY_TARGET_test_chess_FILE M:/c++/train,vs2023/chess/build/test_chess.exe)
+set(__QT_DEPLOY_TARGET_test_chess_TYPE EXECUTABLE)
+set(__QT_DEPLOY_TARGET_test_chess_RUNTIME_DLLS )

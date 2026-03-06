@@ -1,0 +1,29 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "默认配置",
+            "binaryDir": "${sourceDir}/build",
+            "generator": "MinGW Makefiles",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_PREFIX_PATH": "M:/qt/main/6.9.1/mingw_64"
+            }
+        },
+        {
+            "name": "new",
+            "description": "",
+            "displayName": "",
+            "inherits": [
+                "default"
+            ]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "default",
+            "configurePreset": "default"
+        }
+    ]
+}

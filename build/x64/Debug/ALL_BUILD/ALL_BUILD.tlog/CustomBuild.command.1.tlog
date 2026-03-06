@@ -1,0 +1,10 @@
+^M:\C++\TRAIN,VS2023\CHESS\CMAKELISTS.TXT
+setlocal
+M:\c++\cmake\bin\cmake.exe -SM:/c++/train,vs2023/chess -BM:/c++/train,vs2023/chess/build --check-stamp-file M:/c++/train,vs2023/chess/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
