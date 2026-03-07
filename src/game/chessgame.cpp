@@ -140,3 +140,21 @@ int ChessGame::getCurrentPlayer()
 {
     return currentPlayer;
 }
+
+int ChessGame::getPieceAt(int x, int y) const
+{
+    if (x < 0 || x >= CHESSBOARDSIZE || y < 0 || y >= CHESSBOARDSIZE)
+    {
+        return -1;
+    }
+
+    return board[x][y];
+}
+
+void ChessGame::setNextAiColor(int color)
+{
+    if (color == 1 || color == 2)
+    {
+        currentPlayer = color;
+    }
+}

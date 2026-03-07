@@ -23,14 +23,31 @@ private:
 
 public:
     ChessGame();
+
     void initBoard();
+
     bool placePiece(int x, int y);
+
     // 沿着四个方向检查是否胜利
     int checkWin(int x, int y);
+
     // 检测整个棋盘，是否有胜利
     int checkWinGlobal();
+
+    // 检查是否满了
     bool isBoardFull();
+
+    // 获取当前玩家颜色
     int getCurrentPlayer();
+
+    // 获取指定位置的棋子颜色（0 空，1 黑，2 白）
+    int getPieceAt(int x, int y) const;
+
+    // 获取棋盘大小
+    static const int getBoardSize() { return CHESSBOARDSIZE; }
+
+    // 设置ai下一局颜色
+    void setNextAiColor(int color);
 };
 
 #endif

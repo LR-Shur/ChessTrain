@@ -1,6 +1,6 @@
 set(__QT_DEPLOY_TARGET_chess_FILE M:/c++/train,vs2023/chess/build/chess.exe)
 set(__QT_DEPLOY_TARGET_chess_TYPE EXECUTABLE)
-set(__QT_DEPLOY_TARGET_chess_RUNTIME_DLLS )
+set(__QT_DEPLOY_TARGET_chess_RUNTIME_DLLS M:/qt/main/6.9.1/mingw_64/bin/Qt6Widgets.dll;M:/qt/main/6.9.1/mingw_64/bin/Qt6Gui.dll;M:/qt/main/6.9.1/mingw_64/bin/Qt6Core.dll)
 set(__QT_DEPLOY_TARGET_test_chess_FILE M:/c++/train,vs2023/chess/build/test_chess.exe)
 set(__QT_DEPLOY_TARGET_test_chess_TYPE EXECUTABLE)
-set(__QT_DEPLOY_TARGET_test_chess_RUNTIME_DLLS )
+set(__QT_DEPLOY_TARGET_test_chess_RUNTIME_DLLS M:/qt/main/6.9.1/mingw_64/bin/Qt6Widgets.dll;M:/qt/main/6.9.1/mingw_64/bin/Qt6Gui.dll;M:/qt/main/6.9.1/mingw_64/bin/Qt6Core.dll)

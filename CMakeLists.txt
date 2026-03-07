@@ -10,16 +10,23 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(include)
 
 # qt相关
-find_package(Qt6 REQUIRED COMPONENTS WIdgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
 
 # 主可执行文件
-add_executable(chess main.cpp src/game/chessgame.cpp)
-target_link_libraries(chess)
+add_executable(chess src/gui/main.cpp src/game/chessgame.cpp src/gui/mainwindow.h src/gui/mainwindow.cpp src/gui/mainwindow.ui
+    src/gui/BoardWidget.h
+    src/gui/BoardWidget.cpp)
+target_link_libraries(chess Qt6::Widgets)
 
 # 测试相关
 include(CTest)
 enable_testing()
-add_executable(test_chess tests/test_game.cpp src/game/chessgame.cpp)
+add_executable(test_chess tests/test_game.cpp src/game/chessgame.cpp
+    src/gui/mainwindow.h src/gui/mainwindow.cpp src/gui/mainwindow.ui
+    src/gui/BoardWidget.cpp)
+target_link_libraries(test_chess Qt6::Widgets)
 
 # 添加测试
 add_test(NAME ChessTest COMMAND test_chess)

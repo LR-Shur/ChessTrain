@@ -45,7 +45,7 @@ SVNOptions:
 SVNUpdateOptions: 
 
 # Git options
-GITCommand: 
+GITCommand: M:/GIT/Git/cmd/git.exe
 GITInitSubmodules: 
 GITUpdateOptions: 
 GITUpdateCustom: 
@@ -58,12 +58,12 @@ P4UpdateOptions:
 P4UpdateCustom: 
 
 # Generic update command
-UpdateCommand: 
+UpdateCommand: M:/GIT/Git/cmd/git.exe
 UpdateOptions: 
-UpdateType: 
+UpdateType: git
 
 # Compiler info
-Compiler: m:/mingw64/mingw64/bin/g++.exe
+Compiler: M:/mingw64/mingw64/bin/c++.exe
 CompilerVersion: 15.2.0
 
 # Dynamic analysis (MemCheck)

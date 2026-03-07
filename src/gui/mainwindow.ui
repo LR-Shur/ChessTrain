@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="4,1">
+      <item>
+       <widget class="QWidget" name="boardContainer" native="true"/>
+      </item>
+      <item>
+       <widget class="QWidget" name="rightPanel" native="true">
+        <widget class="QWidget" name="verticalLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>10</y>
+           <width>160</width>
+           <height>281</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QPushButton" name="newGameButton">
+            <property name="text">
+             <string>开始新游戏</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>谁先走</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="firstMoveCombo">
+            <item>
+             <property name="text">
+              <string>黑棋先走</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>白棋先走</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>随机</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="saveFirstMoveButton">
+            <property name="text">
+             <string>保存设置</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPlainTextEdit" name="infoTextEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_ai">
+    <property name="title">
+     <string>哈基奥智能五子棋对战ai</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_G">
+    <property name="title">
+     <string>游戏(&amp;G)</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="actionrestart"/>
+    <addaction name="actionquit"/>
+   </widget>
+   <addaction name="menu_ai"/>
+   <addaction name="menu_G"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionrestart">
+   <property name="text">
+    <string>restart</string>
+   </property>
+  </action>
+  <action name="actionquit">
+   <property name="text">
+    <string>quit</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
