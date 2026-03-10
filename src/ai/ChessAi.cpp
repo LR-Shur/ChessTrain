@@ -376,12 +376,13 @@ void ChessAi::placePieceInTempBoard(int (&board)[ChessGame::CHESSBOARDSIZE][Ches
     }
 }
 
-std::vector<int> ChessAi::getBestMove(int aiColor, int depth)
+std::vector<int> ChessAi::getBestMove(int aiColor, int maxDepth, int minDepth, int timeLimitMs)
 {
     const int SIZE = ChessGame::CHESSBOARDSIZE;
     std::vector<int> bestMove = {-1, -1}; // 初始无效位置
     int alpha = -1000000;                 // 阿尔法初始值（极小）
     int beta = 1000000;                   // 贝塔初始值（极大）
+    std::vector<int> lastBestMove;
 
     int currentBoard[SIZE][SIZE];
     for (int i = 0; i < SIZE; i++)
@@ -391,11 +392,55 @@ std::vector<int> ChessAi::getBestMove(int aiColor, int depth)
             currentBoard[i][j] = chessGame->getPieceAt(i, j);
         }
     }
+    // 计时器
+    auto startTime = std::chrono::steady_clock::now();
 
-    alphaBeta(currentBoard, depth, alpha, beta, aiColor, bestMove, true);
-    if (bestMove[0] == -1 || bestMove[1] == -1)
+    for (int depth = minDepth; depth <= maxDepth; depth++)
     {
-        bestMove = {SIZE / 2, SIZE / 2};
+        // 检查是否超时
+        auto now = std::chrono::steady_clock::now();
+        auto elapsed = chrono::duration_cast<chrono::milliseconds>(now - startTime).count();
+        if (elapsed >= timeLimitMs)
+        {
+            std::cout << "时间用完，停止于深度 " << depth - 1 << std::endl;
+            break;
+        }
+
+        std::cout << "正在搜索深度 " << depth << " ..." << std::endl;
+
+        // 生成走法（可能需要排序）
+        auto moves = generateMoves(currentBoard);
+        if (moves.empty())
+            break;
+
+        // 如果有上一深度的最佳走法且在当前 moves 中，将其移到最前面
+        if (!lastBestMove.empty())
+        {
+            auto it = std::find(moves.begin(), moves.end(), lastBestMove);
+            if (it != moves.end())
+            {
+                std::rotate(moves.begin(), it, it + 1); // 将 lastBestMove 换到开头
+            }
+        }
+
+        // 对走法进行排序,排除bestmove
+        auto firstMove = moves.front();
+        moves.erase(moves.begin());
+        SortMoves(moves, currentBoard, aiColor, true); // true 表示极大层
+        moves.insert(moves.begin(), firstMove);
+
+        // 本次搜索的最佳走法（临时）
+        std::vector<int> currentBestMove;
+
+        int score = alphaBeta(currentBoard, depth, alpha, beta, aiColor, currentBestMove, true);
+
+        if (!currentBestMove.empty())
+        {
+            bestMove = currentBestMove;
+            lastBestMove = currentBestMove; // 记录作为下一深度的优先走法
+        }
+
+        std::cout << "深度 " << depth << " 最佳走法: (" << bestMove[0] << "," << bestMove[1] << ") 分数: " << score << std::endl;
     }
 
     return bestMove;
