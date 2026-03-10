@@ -1,4 +1,5 @@
 #include "game/ChessGame.h"
+#include "game/ChessGame.h"
 
 void ChessGame::changePlayer()
 {
@@ -61,6 +62,7 @@ void ChessGame::initBoard()
             board[i][j] = 0;
         }
     }
+    currentPlayer = BLACKPLAYER; // 重启后，黑棋先动
 }
 
 bool ChessGame::placePiece(int x, int y)
@@ -155,6 +157,20 @@ void ChessGame::setNextAiColor(int color)
 {
     if (color == 1 || color == 2)
     {
-        currentPlayer = color;
+        aiColor = color;
+    }
+}
+
+int ChessGame::getAiColor()
+{
+    return aiColor;
+}
+
+void ChessGame::undoPiece(int x, int y)
+{
+    if (x >= 0 && x < CHESSBOARDSIZE && y >= 0 && y < CHESSBOARDSIZE)
+    {
+        board[x][y] = 0; // 清空该位置
+        changePlayer();  // 还原玩家（因为placePiece会切换玩家）
     }
 }

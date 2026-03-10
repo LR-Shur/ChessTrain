@@ -14,10 +14,22 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 
-# 主可执行文件
-add_executable(chess src/gui/main.cpp src/game/chessgame.cpp src/gui/mainwindow.h src/gui/mainwindow.cpp src/gui/mainwindow.ui
+set(SOURCES
+    src/gui/main.cpp
+    src/gui/BoardWidget.cpp
+    src/gui/mainwindow.cpp
+    src/game/chessgame.cpp
+    src/ai/ChessAi.cpp
+)
+set(HEADERS
     src/gui/BoardWidget.h
-    src/gui/BoardWidget.cpp)
+    src/gui/mainwindow.h
+    include/game/ChessGame.h
+    include/ai/ChessAi.h
+)
+
+# 主可执行文件
+add_executable(chess ${SOURCES} ${HEADERS})
 target_link_libraries(chess Qt6::Widgets)
 
 # 测试相关
@@ -25,8 +37,6 @@ include(CTest)
 enable_testing()
 add_executable(test_chess tests/test_game.cpp src/game/chessgame.cpp
     src/gui/mainwindow.h src/gui/mainwindow.cpp src/gui/mainwindow.ui
-    src/gui/BoardWidget.cpp)
-target_link_libraries(test_chess Qt6::Widgets)
-
-# 添加测试
+    src/gui/BoardWidget.cpp src/ai/ChessAi.cpp)
+target_link_libraries(test_chess Qt6::Widgets) # 添加测试
 add_test(NAME ChessTest COMMAND test_chess)

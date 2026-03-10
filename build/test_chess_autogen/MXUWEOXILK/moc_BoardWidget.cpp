@@ -43,7 +43,11 @@ template <> constexpr inline auto BoardWidget::qt_create_metaobjectdata<qt_meta_
         "",
         "winner",
         "piecePlaced",
-        "nextPlayer"
+        "nextPlayer",
+        "onAiMove",
+        "onAiMoveFinished",
+        "std::vector<int>",
+        "aiMove"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -54,6 +58,12 @@ template <> constexpr inline auto BoardWidget::qt_create_metaobjectdata<qt_meta_
         // Signal 'piecePlaced'
         QtMocHelpers::SignalData<void(int)>(4, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::Int, 5 },
+        }}),
+        // Slot 'onAiMove'
+        QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onAiMoveFinished'
+        QtMocHelpers::SlotData<void(std::vector<int>)>(7, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 8, 9 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
@@ -80,6 +90,8 @@ void BoardWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         switch (_id) {
         case 0: _t->gameOver((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 1: _t->piecePlaced((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 2: _t->onAiMove(); break;
+        case 3: _t->onAiMoveFinished((*reinterpret_cast< std::add_pointer_t<std::vector<int>>>(_a[1]))); break;
         default: ;
         }
     }
@@ -110,14 +122,14 @@ int BoardWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 4;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 4)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
+        _id -= 4;
     }
     return _id;
 }

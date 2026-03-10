@@ -4,12 +4,12 @@
 #include <QMessageBox>
 #include <QStatusBar>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), m_game(new ChessGame()), m_boardWidget(nullptr)
+MainWindow::MainWindow(QWidget *parent, ChessGame *game, ChessAi *ai)
+    : QMainWindow(parent), ui(new Ui::MainWindow), m_game(game), m_ai(ai), m_boardWidget(nullptr)
 {
         ui->setupUi(this);
         // 创建棋盘
-        m_boardWidget = new BoardWidget(m_game, this);
+        m_boardWidget = new BoardWidget(m_game, this, ai);
         std::srand(static_cast<unsigned>(std::time(nullptr))); // 添加随机种子
 
         // 拿到boardcontainer的布局然后添加
@@ -29,12 +29,14 @@ MainWindow::MainWindow(QWidget *parent)
 
         // 4. 连接按钮
         connect(ui->saveFirstMoveButton, &QPushButton::clicked,
-                this, &MainWindow::onSaveFirstMove);
+                this, &MainWindow::onSaveAiMoveColor);
         connect(ui->newGameButton, &QPushButton::clicked, this, &MainWindow::onRestart);
         // 5. 初始化状态栏和信息区域
         statusBar()
             ->showMessage("当前玩家: 黑棋");
         updateInfoText("游戏开始，黑棋先走");
+
+        m_boardWidget->restart();
 }
 
 MainWindow::~MainWindow()
@@ -47,32 +49,32 @@ void MainWindow::updateInfoText(const QString &text)
         ui->infoTextEdit->appendPlainText(text);
 }
 
-void MainWindow::onSaveFirstMove()
+void MainWindow::onSaveAiMoveColor()
 {
         int index = ui->firstMoveCombo->currentIndex(); // 0黑先，1白先，2随机
-        int firstPlayer = 1;                            // 默认黑先
+        int aiPlayer = 1;                               // 默认黑先
 
         if (index == 0)
         {
-                firstPlayer = 1;
+                aiPlayer = 1;
         }
         else if (index == 1)
         {
-                firstPlayer = 2;
+                aiPlayer = 2;
         }
         else if (index == 2)
         {
                 // 随机生成 1 或 2
-                firstPlayer = (std::rand() % 2) + 1;
+                aiPlayer = (std::rand() % 2) + 1;
         }
 
-        m_game->setNextAiColor(firstPlayer); // 设置先手
-        m_game->initBoard();                 // 清空棋盘
-        m_boardWidget->update();             // 刷新显示
+        m_game->setNextAiColor(aiPlayer); // 设置先手
 
-        QString playerStr = (firstPlayer == 1) ? "黑棋" : "白棋";
-        statusBar()->showMessage("当前玩家: " + playerStr);
-        updateInfoText("先手设置为 " + playerStr + "，游戏重新开始");
+        m_boardWidget->restart();
+
+        QString aiStr = (aiPlayer == 1) ? "黑棋" : "白棋";
+        statusBar()->showMessage("当前ai: " + aiStr);
+        updateInfoText("ai设置为 " + aiStr + ",游戏重新开始");
 }
 
 void MainWindow::onPiecePlaced(int nextPlayer)
@@ -109,7 +111,7 @@ void MainWindow::onRestart()
 {
 
         m_game->initBoard();     // 清空棋盘
-        m_boardWidget->update(); // 刷新显示
+        m_boardWidget->restart();
 
         QString playerStr = (m_game->getCurrentPlayer() == 1) ? "黑棋" : "白棋";
         statusBar()->showMessage("当前玩家: " + playerStr);

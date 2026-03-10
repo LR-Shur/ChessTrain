@@ -4,10 +4,12 @@
 #include <cmath>
 
 // 构造函数
-BoardWidget::BoardWidget(ChessGame *game, QWidget *parent)
+BoardWidget::BoardWidget(ChessGame *game, QWidget *parent, ChessAi *chessAi)
     : QWidget(parent) // 调用基类 QWidget 的构造函数
       ,
       m_game(game) // 保存传入的游戏对象指针
+      ,
+      m_ai(chessAi)
 
 {
     setMinimumSize(500, 500); // 设置控件的最小尺寸，防止窗口缩得太小
@@ -18,6 +20,28 @@ void BoardWidget::setGame(ChessGame *game)
 {
     m_game = game;
     update(); // 请求重绘棋盘
+}
+
+void BoardWidget::restart()
+{
+    if (!m_game)
+        return;
+
+    // 1. 重置所有状态（避免残留状态导致逻辑错误）
+    m_clickEnabled = true;
+    m_isAiTurn = false;
+    // 2. 清空棋盘
+    m_game->initBoard();
+
+    // 3. 重绘棋盘
+    update();
+    // 4. 判断当前玩家是否是AI，若是则主动触发AI落子
+    if (isCurrentPlayerAi())
+    {
+        m_isAiTurn = true;
+        m_clickEnabled = false; // AI回合禁用玩家点击
+        onAiMove();             // 触发AI落子
+    }
 }
 
 // 计算当前控件大小下最佳的格子尺寸和边距
@@ -49,12 +73,14 @@ void BoardWidget::calculateBoardParams(int &cellSize, int &margin) const
 // 绘制事件
 void BoardWidget::paintEvent(QPaintEvent *event)
 {
+
+    // 先初始化 painter，再判断 m_game（避免 painter 状态异常）
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing); // 开启抗锯齿，让线条更平滑
+
     // 如果没有游戏对象，就不绘制
     if (!m_game)
         return;
-
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing); // 开启抗锯齿，让线条更平滑
 
     // 获取棋盘大小
     int cellSize, margin;
@@ -111,8 +137,8 @@ void BoardWidget::paintEvent(QPaintEvent *event)
 // 鼠标按下事件
 void BoardWidget::mousePressEvent(QMouseEvent *event)
 {
-    if (!m_game)
-        return; // 没有游戏对象，忽略点击
+    if (!m_clickEnabled || m_isAiTurn || !m_game)
+        return;
     if (event->button() != Qt::LeftButton)
         return; // 只处理左键
 
@@ -145,13 +171,76 @@ void BoardWidget::mousePressEvent(QMouseEvent *event)
     emit piecePlaced(m_game->getCurrentPlayer());
 
     // 检查游戏是否结束
+    checkGameOver();
+
+    // 7. 判断是否轮到AI落子
+    if (isCurrentPlayerAi() && !m_game->checkWinGlobal())
+    {
+        m_isAiTurn = true;      // 标记AI回合
+        m_clickEnabled = false; // 禁用玩家点击
+        onAiMove();
+    }
+}
+
+void BoardWidget::onAiMove()
+{
+    cout << "onaimove";
+    if (!m_game || !m_ai)
+        return;
+
+    // 将AI计算放到后台线程
+    QtConcurrent::run([this]()
+                      {
+        // 后台计算最佳落点
+        std::vector<int> aiMove = m_ai->getBestMove(m_game->getAiColor(), 5);
+        // 计算完成后切回主线程更新UI
+        QMetaObject::invokeMethod(this, "onAiMoveFinished",
+                                  Qt::QueuedConnection,
+                                  Q_ARG(std::vector<int>, aiMove)); });
+}
+
+void BoardWidget::checkGameOver()
+{
     int winner = m_game->checkWinGlobal();
     if (winner != 0)
     {
-        emit gameOver(winner); // 发射游戏结束信号
+        m_clickEnabled = false; // 游戏结束禁用点击
+        emit gameOver(winner);  // 通知主窗口
     }
     else if (m_game->isBoardFull())
     {
-        emit gameOver(0); // 棋盘满了，平局
+        m_clickEnabled = false;
+        emit gameOver(0); // 平局
     }
+}
+
+void BoardWidget::onAiMoveFinished(std::vector<int> aiMove)
+{
+    if (!m_game || aiMove.size() < 2)
+    {
+        m_isAiTurn = false;
+        m_clickEnabled = true;
+        return;
+    }
+
+    int aiRow = aiMove[0];
+    int aiCol = aiMove[1];
+    // AI落子
+    if (m_game->placePiece(aiRow, aiCol))
+    {
+        update();        // 重绘棋盘
+        checkGameOver(); // 检查游戏结束
+    }
+
+    // 恢复玩家操作
+    m_isAiTurn = false;
+    m_clickEnabled = true;
+}
+
+bool BoardWidget::isCurrentPlayerAi() const
+{
+    if (!m_game)
+        return false;
+    // 核心：当前玩家 == AI颜色 → 是AI回合
+    return m_game->getCurrentPlayer() == m_game->getAiColor();
 }

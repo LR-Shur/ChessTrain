@@ -10,6 +10,7 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_PREFIX_PATH": "M:/qt/main/6.9.1/mingw_64"
             }
+            
         },
         {
             "name": "new",

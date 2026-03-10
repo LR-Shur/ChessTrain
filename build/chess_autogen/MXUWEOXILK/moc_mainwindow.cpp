@@ -41,7 +41,7 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "MainWindow",
         "onRestart",
         "",
-        "onSaveFirstMove",
+        "onSaveAiMoveColor",
         "onPiecePlaced",
         "nextPlayer",
         "onGameOver",
@@ -51,7 +51,7 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
     QtMocHelpers::UintData qt_methods {
         // Slot 'onRestart'
         QtMocHelpers::SlotData<void()>(1, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onSaveFirstMove'
+        // Slot 'onSaveAiMoveColor'
         QtMocHelpers::SlotData<void()>(3, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onPiecePlaced'
         QtMocHelpers::SlotData<void(int)>(4, 2, QMC::AccessPrivate, QMetaType::Void, {{
@@ -85,7 +85,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: _t->onRestart(); break;
-        case 1: _t->onSaveFirstMove(); break;
+        case 1: _t->onSaveAiMoveColor(); break;
         case 2: _t->onPiecePlaced((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 3: _t->onGameOver((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         default: ;

@@ -1,5 +1,6 @@
 M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp: M:/c++/train,vs2023/chess/src/gui/mainwindow.h \
   M:/c++/train,vs2023/chess/build/test_chess_autogen/moc_predefs.h \
+  M:/c++/train,vs2023/chess/include/ai/ChessAi.h \
   M:/c++/train,vs2023/chess/include/game/ChessGame.h \
   M:/c++/train,vs2023/chess/include/game/chessgame.h \
   M:/c++/train,vs2023/chess/src/gui/BoardWidget.h \
@@ -15,6 +16,7 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/mingw64/mingw64/include/c++/15.2.0/bits/allocated_ptr.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/allocator.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/atomic_base.h \
+  M:/mingw64/mingw64/include/c++/15.2.0/bits/atomic_futex.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/atomic_lockfree_defines.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/basic_ios.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/basic_ios.tcc \
@@ -59,6 +61,8 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/mingw64/mingw64/include/c++/15.2.0/bits/postypes.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/predefined_ops.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/ptr_traits.h \
+  M:/mingw64/mingw64/include/c++/15.2.0/bits/random.h \
+  M:/mingw64/mingw64/include/c++/15.2.0/bits/random.tcc \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/range_access.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/refwrap.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/requires_hosted.h \
@@ -68,6 +72,8 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/mingw64/mingw64/include/c++/15.2.0/bits/specfun.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/std_abs.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/std_function.h \
+  M:/mingw64/mingw64/include/c++/15.2.0/bits/std_mutex.h \
+  M:/mingw64/mingw64/include/c++/15.2.0/bits/std_thread.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/stl_algo.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/stl_algobase.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/stl_bvector.h \
@@ -96,6 +102,7 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/mingw64/mingw64/include/c++/15.2.0/bits/string_view.tcc \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/stringfwd.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/uniform_int_dist.h \
+  M:/mingw64/mingw64/include/c++/15.2.0/bits/unique_lock.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/unique_ptr.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/unordered_map.h \
   M:/mingw64/mingw64/include/c++/15.2.0/bits/unordered_set.h \
@@ -113,6 +120,7 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/mingw64/mingw64/include/c++/15.2.0/cmath \
   M:/mingw64/mingw64/include/c++/15.2.0/compare \
   M:/mingw64/mingw64/include/c++/15.2.0/concepts \
+  M:/mingw64/mingw64/include/c++/15.2.0/condition_variable \
   M:/mingw64/mingw64/include/c++/15.2.0/cstddef \
   M:/mingw64/mingw64/include/c++/15.2.0/cstdint \
   M:/mingw64/mingw64/include/c++/15.2.0/cstdio \
@@ -131,7 +139,9 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/mingw64/mingw64/include/c++/15.2.0/ext/numeric_traits.h \
   M:/mingw64/mingw64/include/c++/15.2.0/ext/string_conversions.h \
   M:/mingw64/mingw64/include/c++/15.2.0/ext/type_traits.h \
+  M:/mingw64/mingw64/include/c++/15.2.0/filesystem \
   M:/mingw64/mingw64/include/c++/15.2.0/functional \
+  M:/mingw64/mingw64/include/c++/15.2.0/future \
   M:/mingw64/mingw64/include/c++/15.2.0/initializer_list \
   M:/mingw64/mingw64/include/c++/15.2.0/ios \
   M:/mingw64/mingw64/include/c++/15.2.0/iosfwd \
@@ -142,12 +152,14 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/mingw64/mingw64/include/c++/15.2.0/list \
   M:/mingw64/mingw64/include/c++/15.2.0/map \
   M:/mingw64/mingw64/include/c++/15.2.0/memory \
+  M:/mingw64/mingw64/include/c++/15.2.0/mutex \
   M:/mingw64/mingw64/include/c++/15.2.0/new \
   M:/mingw64/mingw64/include/c++/15.2.0/numeric \
   M:/mingw64/mingw64/include/c++/15.2.0/optional \
   M:/mingw64/mingw64/include/c++/15.2.0/ostream \
   M:/mingw64/mingw64/include/c++/15.2.0/pstl/execution_defs.h \
   M:/mingw64/mingw64/include/c++/15.2.0/pstl/glue_numeric_defs.h \
+  M:/mingw64/mingw64/include/c++/15.2.0/random \
   M:/mingw64/mingw64/include/c++/15.2.0/ratio \
   M:/mingw64/mingw64/include/c++/15.2.0/set \
   M:/mingw64/mingw64/include/c++/15.2.0/stdexcept \
@@ -186,12 +198,126 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/mingw64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/error_constants.h \
   M:/mingw64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/gthr-default.h \
   M:/mingw64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/gthr.h \
+  M:/mingw64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/opt_random.h \
   M:/mingw64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/os_defines.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/adxintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/amxavx512intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/amxbf16intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/amxcomplexintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/amxfp16intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/amxfp8intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/amxint8intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/amxmovrsintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/amxtf32intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/amxtileintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/amxtransposeintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx10_2-512bf16intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx10_2-512convertintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx10_2-512mediaintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx10_2-512minmaxintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx10_2-512satcvtintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx10_2bf16intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx10_2convertintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx10_2copyintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx10_2mediaintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx10_2minmaxintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx10_2satcvtintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx2intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512bf16intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512bf16vlintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512bitalgintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512bitalgvlintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512bwintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512cdintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512dqintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512fintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512fp16intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512fp16vlintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512ifmaintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512ifmavlintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vbmi2intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vbmi2vlintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vbmiintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vbmivlintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vlbwintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vldqintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vlintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vnniintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vnnivlintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vp2intersectintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vp2intersectvlintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vpopcntdqintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avx512vpopcntdqvlintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avxifmaintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avxintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avxneconvertintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avxvnniint16intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avxvnniint8intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/avxvnniintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/bmi2intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/bmiintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/cetintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/cldemoteintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/clflushoptintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/clwbintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/clzerointrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/cmpccxaddintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/emmintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/enqcmdintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/f16cintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/fmaintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/fxsrintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/gfniintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/hresetintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/ia32intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/immintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/keylockerintrin.h \
   M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/limits.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/lwpintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/lzcntintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/mm_malloc.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/mmintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/movdirintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/movrsintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/mwaitintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/mwaitxintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/pconfigintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/pkuintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/pmmintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/popcntintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/prfchiintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/prfchwintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/raointintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/rdseedintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/rtmintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/serializeintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/sgxintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/sha512intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/shaintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/sm3intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/sm4intrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/smmintrin.h \
   M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdarg.h \
   M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdbool.h \
   M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stddef.h \
   M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/syslimits.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/tbmintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/tmmintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/tsxldtrkintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/uintrintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/usermsrintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/vaesintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/vpclmulqdqintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/waitpkgintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/wbnoinvdintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/wmmintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/x86gprintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/xmmintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/xsavecintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/xsaveintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/xsaveoptintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/xsavesintrin.h \
+  M:/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/xtestintrin.h \
   M:/mingw64/mingw64/x86_64-w64-mingw32/include/_mingw.h \
   M:/mingw64/mingw64/x86_64-w64-mingw32/include/_mingw_mac.h \
   M:/mingw64/mingw64/x86_64-w64-mingw32/include/_mingw_off_t.h \
@@ -230,89 +356,235 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/mingw64/mingw64/x86_64-w64-mingw32/include/vadefs.h \
   M:/mingw64/mingw64/x86_64-w64-mingw32/include/wchar.h \
   M:/mingw64/mingw64/x86_64-w64-mingw32/include/wctype.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/QtConcurrent \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/QtConcurrentDepends \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtaskbuilder.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrent_global.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentcompilertest.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentexports.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentfilter.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentfilterkernel.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentfunctionwrappers.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentiteratekernel.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentmap.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentmapkernel.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentmedian.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentreducekernel.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentrun.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentrunbase.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentstoredfunctioncall.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrenttask.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentthreadengine.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtConcurrent/qtconcurrentversion.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QDeadlineTimer \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QFuture \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QHash \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QList \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QMap \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QMutex \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QObject \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QString \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QStringList \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QTimer \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QVariant \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QtCore \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/QtCoreDepends \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/q17memory.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/q20algorithm.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/q20chrono.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/q20functional.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/q20iterator.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/q20map.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/q20memory.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/q20type_traits.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/q20utility.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/q20vector.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/q23functional.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/q23utility.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/q26numeric.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qabstractanimation.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qabstracteventdispatcher.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qabstractitemmodel.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qabstractnativeeventfilter.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qabstractproxymodel.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qalgorithms.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qanimationgroup.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qanystringview.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qapplicationstatic.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qarraydata.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qarraydataops.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qarraydatapointer.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qassert.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qassociativeiterable.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qatomic.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qatomic_cxx11.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qatomicscopedvaluerollback.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qbasicatomic.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qbasictimer.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qbindingstorage.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qbitarray.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qbuffer.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qbytearray.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qbytearrayalgorithms.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qbytearraylist.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qbytearraymatcher.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qbytearrayview.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcache.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcalendar.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcborarray.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcborcommon.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcbormap.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcborstream.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcborstreamreader.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcborstreamwriter.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcborvalue.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qchar.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qchronotimer.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcollator.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcommandlineoption.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcommandlineparser.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qcompare.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qcompare_impl.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qcomparehelpers.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qcompilerdetection.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qconcatenatetablesproxymodel.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qconfig.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qconstructormacros.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qcontainerfwd.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qcontainerinfo.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qcontainertools_impl.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qcontiguouscache.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcoreapplication.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcoreapplication_platform.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcoreevent.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qcryptographichash.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qdarwinhelpers.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qdatastream.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qdatetime.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qdeadlinetimer.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qdebug.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qdir.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qdiriterator.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qdirlisting.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qeasingcurve.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qelapsedtimer.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qendian.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qeventloop.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qexception.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qexceptionhandling.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qfactoryinterface.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qfile.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qfiledevice.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qfileinfo.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qfileselector.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qfilesystemwatcher.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qflags.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qfloat16.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qforeach.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qfunctionaltools_impl.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qfunctionpointer.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qfuture.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qfuture_impl.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qfutureinterface.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qfuturesynchronizer.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qfuturewatcher.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qgenericatomic.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qglobal.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qglobalstatic.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qhash.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qhashfunctions.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qidentityproxymodel.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qiodevice.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qiodevicebase.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qitemselectionmodel.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qiterable.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qiterator.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qjsonarray.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qjsondocument.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qjsonobject.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qjsonparseerror.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qjsonvalue.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qlatin1stringmatcher.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qlatin1stringview.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qlibrary.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qlibraryinfo.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qline.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qlist.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qlocale.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qlockfile.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qlogging.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qloggingcategory.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qmalloc.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qmap.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qmargins.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qmath.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qmessageauthenticationcode.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qmetacontainer.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qmetaobject.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qmetatype.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qmimedata.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qmimedatabase.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qmimetype.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qminmax.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qmutex.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qnamespace.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qnativeinterface.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qnumeric.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qobject.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qobject_impl.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qobjectcleanuphandler.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qobjectdefs.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qobjectdefs_impl.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qoperatingsystemversion.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qoverload.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qpair.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qparallelanimationgroup.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qpauseanimation.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qpermissions.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qplugin.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qpluginloader.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qpoint.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qpointer.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qprocess.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qprocessordetection.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qpromise.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qproperty.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qpropertyanimation.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qpropertyprivate.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qqueue.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qrandom.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qreadwritelock.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qrect.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qrefcount.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qregularexpression.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qresource.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qresultstore.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qrunnable.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qsavefile.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qscopedpointer.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qscopedvaluerollback.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qscopeguard.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qsemaphore.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qsequentialanimationgroup.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qsequentialiterable.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qset.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qsettings.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qshareddata.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qshareddata_impl.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qsharedmemory.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qsharedpointer.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qsharedpointer_impl.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qsignalmapper.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qsimd.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qsize.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qsocketnotifier.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qsortfilterproxymodel.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qspan.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qstack.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qstandardpaths.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qstaticlatin1stringmatcher.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qstdlibdetection.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qstorageinfo.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qstring.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qstringalgorithms.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qstringbuilder.h \
@@ -320,6 +592,7 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qstringconverter_base.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qstringfwd.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qstringlist.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qstringlistmodel.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qstringliteral.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qstringmatcher.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qstringtokenizer.h \
@@ -327,6 +600,7 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qswap.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qsysinfo.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qsystemdetection.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qsystemsemaphore.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtaggedpointer.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtclasshelpermacros.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtconfiginclude.h \
@@ -334,25 +608,55 @@ M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtcore-config.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtcoreexports.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtcoreglobal.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtcoreversion.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtdeprecationdefinitions.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtdeprecationmarkers.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtemporarydir.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtemporaryfile.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtenvironmentvariables.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtextboundaryfinder.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtextstream.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtformat_impl.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qthread.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qthreadpool.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qthreadstorage.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtimeline.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtimer.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtimezone.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtipccommon.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtmetamacros.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtmocconstants.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtnoop.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtpreprocessorsupport.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtranslator.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtransposeproxymodel.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtresource.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtsan_impl.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtsymbolmacros.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qttranslation.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qttypetraits.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtversion.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtversionchecks.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtypeinfo.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qtyperevision.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qtypes.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qurl.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qurlquery.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qutf8stringview.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/quuid.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qvariant.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qvariantanimation.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qvarianthash.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qvariantlist.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qvariantmap.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qvarlengtharray.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qvector.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qversionnumber.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qversiontagging.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qwaitcondition.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qwineventnotifier.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qxmlstream.h \
+  M:/qt/main/6.9.1/mingw_64/include/QtCore/qxpfunctional.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qxptype_traits.h \
   M:/qt/main/6.9.1/mingw_64/include/QtCore/qyieldcpu.h \
   M:/qt/main/6.9.1/mingw_64/include/QtGui/qaction.h \

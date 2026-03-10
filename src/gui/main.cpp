@@ -8,7 +8,9 @@ int main(int argc, char *argv[])
 
     // QMessageBox::information(nullptr, "Debug", "Before MainWindow");
 
-    MainWindow w;
+    ChessGame chessGame;
+    ChessAi chessAi(&chessGame);
+    MainWindow w((QWidget *)nullptr, &chessGame, &chessAi);
     w.show();
 
     // QMessageBox::information(nullptr, "Debug", "After show");
