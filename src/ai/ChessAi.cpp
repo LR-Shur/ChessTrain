@@ -48,6 +48,8 @@ int ChessAi::evaluateDirection(const int (&board)[ChessGame::CHESSBOARDSIZE][Che
     int whiteScore = 0;
     const int SIZE = ChessGame::CHESSBOARDSIZE;
     const int dirs[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};
+    bool calculated[SIZE][SIZE][4] = {false};
+    int aiColor = chessGame->getAiColor();
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
@@ -58,6 +60,9 @@ int ChessAi::evaluateDirection(const int (&board)[ChessGame::CHESSBOARDSIZE][Che
             int player = board[i][j];
             for (int d = 0; d < 4; d++)
             {
+                if (calculated[i][j][d])
+                    continue;
+
                 int dx = dirs[d][0];
                 int dy = dirs[d][1];
 
@@ -68,105 +73,62 @@ int ChessAi::evaluateDirection(const int (&board)[ChessGame::CHESSBOARDSIZE][Che
                 {
                     continue;
                 }
+                int dirScore = calcWindowScore(i, j, dx, dy, board);
 
-                // 统计正方向连续同色长度
-                int len = 1;
-                int step = 1;
+                // 标记已计算
+                int markStep = 0;
                 while (true)
                 {
-                    int nx = i + dx * step;
-                    int ny = j + dy * step;
-                    if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE)
+                    int nx = i + dx * markStep;
+                    int ny = j + dy * markStep;
+                    if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE || board[nx][ny] != player)
                         break;
-                    if (board[nx][ny] == player)
-                    {
-                        len++;
-                        step++;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    calculated[nx][ny][d] = true;
+                    markStep++;
                 }
 
-                // 检查正方向终点是否被阻挡（出界或有其他棋子）
-                int nxEnd = i + dx * step;
-                int nyEnd = j + dy * step;
-                bool blockedEnd = (nxEnd < 0 || nxEnd >= SIZE || nyEnd < 0 || nyEnd >= SIZE) || (board[nxEnd][nyEnd] != 0);
-
-                // 检查反方向起点前一个位置是否被阻挡
-                int nxStart = i - dx;
-                int nyStart = j - dy;
-                bool blockedStart = (nxStart < 0 || nxStart >= SIZE || nyStart < 0 || nyStart >= SIZE) || (board[nxStart][nyStart] != 0);
-
-                // 计算此段棋型的分数
-                int score = patternScore(len, blockedStart, blockedEnd);
-
-                // 累加到对应颜色总分
+                // 黑白差异化加权
                 if (player == 1)
                 {
-                    blackScore += score;
+                    blackScore += dirScore; // 黑棋：进攻优先
                 }
                 else
                 {
-                    whiteScore += score;
+                    whiteScore += dirScore * 1.2; // 白棋：防守加权
                 }
             }
         }
     }
 
-    return blackScore - whiteScore; // 黑方得分减去白方得分，正数表示黑优
+    if (aiColor == 2)
+    {
+        return whiteScore - blackScore;
+    }
+    else
+    {
+        return blackScore - whiteScore;
+    }
 }
 
-inline int ChessAi::patternScore(int length, bool blockedStart, bool blockedEnd)
-{
-    if (length >= 5)
-        return FIVE;
-
-    if (length == 4)
-    {
-        if (!blockedStart && !blockedEnd)
-            return LIVE_FOUR;
-        else if (!blockedStart || !blockedEnd)
-            return SLEEP_FOUR; // 单边阻挡
-        else
-            return 0; // 两边阻挡
-    }
-    else if (length == 3)
-    {
-        if (!blockedStart && !blockedEnd)
-            return LIVE_THREE;
-        else if (!blockedStart || !blockedEnd)
-            return SLEEP_THREE;
-        else
-            return 0;
-    }
-    else if (length == 2)
-    {
-        if (!blockedStart && !blockedEnd)
-            return LIVE_TWO;
-        else if (!blockedStart || !blockedEnd)
-            return SLEEP_TWO;
-        else
-            return 0;
-    }
-    else if (length == 1)
-    {
-        if (!blockedStart && !blockedEnd)
-            return LIVE_ONE;
-        else if (!blockedStart || !blockedEnd)
-            return SLEEP_ONE;
-        else
-            return 0;
-    }
-    return 0;
-}
-int ChessAi::alphaBeta(int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSBOARDSIZE], int depth, int alpha, int beta, int player, std::vector<int> &bestMove, bool isRoot)
+int ChessAi::alphaBeta(int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSBOARDSIZE], int depth, int alpha, int beta, int player, std::vector<int> &bestMove, bool isRoot, vector<vector<int>> lastbestMoves)
 {
     constexpr int size = ChessGame::CHESSBOARDSIZE;
     int aiColor = chessGame->getAiColor();
     int opponentColor = (aiColor == 1) ? 2 : 1;
-    if (depth == 0 || chessGame->checkWinGlobal() != 0)
+    int nextPlayer = (player == 1) ? 2 : 1;
+
+    if (isRoot && depth >= 1)
+    {
+        vector<vector<int>> killMoves = findKillMoves(board, opponentColor);
+        if (!killMoves.empty())
+        {
+            bestMove = killMoves[0]; // 直接堵杀棋点
+            // std::cout << "[紧急防守] 检测到一步杀，防守点：(" << bestMove[0] << "," << bestMove[1] << ")" << std::endl;
+            return aiColor == 1 ? -1000000 : 1000000;
+        }
+    }
+
+    if (depth == 0 || checkWin(board) != 0)
     {
         return evaluateDirection(board);
     }
@@ -187,7 +149,14 @@ int ChessAi::alphaBeta(int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSB
     if (aiColor == player)
     {
         // 排序move
-        SortMoves(moves, board, player, true);
+        if (isRoot && !lastbestMoves.empty())
+        {
+            moves = lastbestMoves;
+        }
+        else
+        {
+            SortMoves(moves, board, player, true);
+        }
 
         long long int maxScore = -10000000000;
         for (auto &move : moves)
@@ -201,8 +170,8 @@ int ChessAi::alphaBeta(int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSB
             }
             int tempBoard[size][size];
             copyBoard(board, tempBoard);
-            placePieceInTempBoard(tempBoard, move[0], move[1], aiColor);
-            int Score = alphaBeta(tempBoard, depth - 1, alpha, beta, opponentColor, bestMove, false);
+            placePieceInTempBoard(tempBoard, move[0], move[1], player);
+            int Score = alphaBeta(tempBoard, depth - 1, alpha, beta, nextPlayer, bestMove, false);
 
             if (Score > maxScore)
             {
@@ -214,12 +183,12 @@ int ChessAi::alphaBeta(int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSB
             }
 
             alpha = max(alpha, Score);
-            if (beta < alpha)
+            if (beta <= alpha)
             {
                 break;
             }
         }
-        return alpha;
+        return maxScore;
     }
     else // 极小
     {
@@ -233,7 +202,7 @@ int ChessAi::alphaBeta(int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSB
             int tempBoard[size][size];
             copyBoard(board, tempBoard);
             placePieceInTempBoard(tempBoard, move[0], move[1], player);
-            int Score = alphaBeta(tempBoard, depth - 1, alpha, beta, opponentColor, bestMove, false);
+            int Score = alphaBeta(tempBoard, depth - 1, alpha, beta, nextPlayer, bestMove, false);
 
             if (Score < minScore)
             {
@@ -241,7 +210,7 @@ int ChessAi::alphaBeta(int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSB
             }
 
             beta = min(beta, Score);
-            if (beta < alpha)
+            if (beta <= alpha)
             {
                 break;
             }
@@ -268,77 +237,223 @@ int ChessAi::evaluateMove(vector<int> &move, int (&board)[ChessGame::CHESSBOARDS
 {
     const int dirs[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};
     int SIZE = ChessGame::CHESSBOARDSIZE;
-    int score = 0;
+    int totalScore = 0; // 最终得分（进攻+防守）
     int opponentPlayer = playerColor == 1 ? 2 : 1;
-    // 四个方向
+    int x = move[0], y = move[1]; // 落子点坐标
+
+    // 四个方向遍历
     for (int d = 0; d < 4; d++)
     {
         int dx = dirs[d][0];
         int dy = dirs[d][1];
 
-        // 统计方向连续同色长度
-
-        bool isBlockStart = false; // 起点是否被阻碍
-        bool isBlockEnd = false;   // 终点是否被阻碍
-
-        // 先正方向
-        int lenForward = 0; // 不含本体
-        int lenBackward = 0;
+        int selfForward = 0, selfForwardEmpty = 0;
         for (int i = 1; i < 5; i++)
         {
-            int nx = move[0] + dx * i;
-            int ny = move[1] + dy * i;
-
+            int nx = x + dx * i;
+            int ny = y + dy * i;
             if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE)
-            {
-                isBlockEnd = true;
                 break;
-            }
             if (board[nx][ny] == playerColor)
-            {
-                lenForward++;
-            }
-            else if (board[nx][ny] == opponentPlayer)
-            {
-                isBlockEnd = true;
-                break;
-            }
+                selfForward++;
+            else if (board[nx][ny] == 0)
+                selfForwardEmpty++;
             else
-            {
-                break;
-            }
+                break; // 对方棋子，阻断
         }
-
-        // 反方向
+        // 反方向（含空）统计
+        int selfBackward = 0, selfBackwardEmpty = 0;
         for (int i = -1; i > -5; i--)
         {
-            int nx = move[0] + dx * i;
-            int ny = move[1] + dy * i;
-
+            int nx = x + dx * i;
+            int ny = y + dy * i;
             if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE)
-            {
-                isBlockStart = true;
                 break;
-            }
             if (board[nx][ny] == playerColor)
-            {
-                lenBackward++;
-            }
-            else if (board[nx][ny] == opponentPlayer)
-            {
-                isBlockStart = true;
+                selfBackward++;
+            else if (board[nx][ny] == 0)
+                selfBackwardEmpty++;
+            else
                 break;
+        }
+        // 自己的总长度（含落子点）
+        int selfTotalLen = selfForward + selfBackward + 1;
+        // 自己的空位总数（判断是否是活棋）
+        int selfTotalEmpty = selfForwardEmpty + selfBackwardEmpty;
+
+        // 进攻分赋值（排序用，分数差拉开，优先搜高分）
+        int attackScore = 0;
+        if (selfTotalLen >= 5)
+            attackScore = 100000; // 五连（必胜）
+        else if (selfTotalLen == 4)
+        {
+            if (selfTotalEmpty >= 1)
+                attackScore = 10000; // 活四
+            else
+                attackScore = 1000; // 冲四
+        }
+        else if (selfTotalLen == 3)
+        {
+            if (selfTotalEmpty >= 2)
+                attackScore = 1000; // 活三（优先级高）
+            else
+                attackScore = 100; // 眠三
+        }
+        else if (selfTotalLen == 2)
+        {
+            if (selfTotalEmpty >= 2)
+                attackScore = 100; // 活二
+            else
+                attackScore = 10; // 眠二
+        }
+        else
+            attackScore = 1; // 单棋（保底分）
+
+        board[x][y] = playerColor;
+
+        // 统计对方在该方向的棋型
+        int oppForward = 0, oppForwardEmpty = 0;
+        for (int i = 1; i < 5; i++)
+        {
+            int nx = x + dx * i;
+            int ny = y + dy * i;
+            if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE)
+                break;
+            if (board[nx][ny] == opponentPlayer)
+                oppForward++;
+            else if (board[nx][ny] == 0)
+                oppForwardEmpty++;
+            else
+                break;
+        }
+        int oppBackward = 0, oppBackwardEmpty = 0;
+        for (int i = -1; i > -5; i--)
+        {
+            int nx = x + dx * i;
+            int ny = y + dy * i;
+            if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE)
+                break;
+            if (board[nx][ny] == opponentPlayer)
+                oppBackward++;
+            else if (board[nx][ny] == 0)
+                oppBackwardEmpty++;
+            else
+                break;
+        }
+        // // 恢复落子点（避免修改原棋盘）
+        // board[x][y] = 0;
+
+        // 对方的总长度
+        int oppTotalLen = oppForward + oppBackward + 1;
+        int oppTotalEmpty = oppForwardEmpty + oppBackwardEmpty;
+
+        // 防守分赋值（关键：堵对方活四/冲四的分远高于自己造棋型）
+        int defendScore = 0;
+        if (oppTotalLen >= 5)
+            defendScore = 100000; // 堵五连（必防）
+        else if (oppTotalLen == 4)
+        {
+            if (oppTotalEmpty >= 1)
+                defendScore = 20000; // 堵活四（最高优先级）
+            else
+                defendScore = 2000; // 堵冲四（次高优先级）
+        }
+        else if (oppTotalLen == 3)
+        {
+            if (oppTotalEmpty >= 2)
+                defendScore = 2000; // 堵活三（优先级高于自己活三）
+            else
+                defendScore = 200; // 堵眠三
+        }
+        else if (oppTotalLen == 2)
+        {
+            if (oppTotalEmpty >= 2)
+                defendScore = 200; // 堵活二
+            else
+                defendScore = 20; // 堵眠二
+        }
+        else
+            defendScore = 0; // 无防守价值
+
+        // ======================
+        // 3. 总得分 = 进攻分 + 防守分（防守分权重更高）
+        // ======================
+        totalScore += attackScore + defendScore;
+    }
+
+    board[x][y] = 0;
+    return totalScore;
+}
+
+int ChessAi::checkWin(const int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSBOARDSIZE])
+{
+    for (int i = 0; i < ChessGame::CHESSBOARDSIZE; i++)
+    {
+        for (int j = 0; j < ChessGame::CHESSBOARDSIZE; j++)
+        {
+            if (board[i][j] == 0)
+            {
+                continue;
             }
             else
             {
-                break;
+
+                int result = checkWinPiece(i, j, board);
+                if (result != 0)
+                {
+                    return result;
+                }
             }
         }
-        int len = lenForward + lenBackward + 1;
-        score += patternScore(len, isBlockStart, isBlockEnd);
+    }
+    return 0;
+}
+
+int ChessAi::checkWinPiece(int x, int y, const int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSBOARDSIZE])
+{
+    if (board[x][y] == 0)
+    {
+        return -1;
+    }
+    int color = board[x][y];
+    for (const auto &dir : ChessGame::CheckDIRECTIONS)
+    {
+        if (checkDirection(x, y, dir[0], dir[1], color, board) >= 5)
+        {
+            return color;
+        }
+    }
+    return 0;
+}
+int ChessAi::checkDirection(int x, int y, int dx, int dy, int color, const int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSBOARDSIZE])
+{
+    int count = 1; // 先算上自己这个点
+    int size = ChessGame::CHESSBOARDSIZE;
+    // 正方向
+    int nx = x + dx;
+    int ny = y + dy;
+    while (nx >= 0 && nx < size &&
+           ny >= 0 && ny < size &&
+           board[nx][ny] == color)
+    {
+        ++count;
+        nx += dx;
+        ny += dy;
     }
 
-    return score;
+    // 反方向
+    nx = x - dx;
+    ny = y - dy;
+    while (nx >= 0 && nx < size &&
+           ny >= 0 && ny < size &&
+           board[nx][ny] == color)
+    {
+        ++count;
+        nx -= dx;
+        ny -= dy;
+    }
+
+    return count;
 }
 
 void ChessAi::SortMoves(vector<vector<int>> &moves, int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSBOARDSIZE], int playerColor, bool maximizing)
@@ -349,15 +464,7 @@ void ChessAi::SortMoves(vector<vector<int>> &moves, int (&board)[ChessGame::CHES
         int score = evaluateMove(move, board, playerColor);
         scoredMoves.emplace_back(score, move);
     }
-    if (maximizing)
-    {
-        // 极大
-        std::sort(scoredMoves.begin(), scoredMoves.end(), greater<pair<int, vector<int>>>());
-    }
-    else
-    {
-        std::sort(scoredMoves.begin(), scoredMoves.end(), less<pair<int, vector<int>>>());
-    }
+    std::sort(scoredMoves.begin(), scoredMoves.end(), greater<pair<int, vector<int>>>());
     // 更新 moves
     moves.clear();
     for (auto &p : scoredMoves)
@@ -380,8 +487,7 @@ std::vector<int> ChessAi::getBestMove(int aiColor, int maxDepth, int minDepth, i
 {
     const int SIZE = ChessGame::CHESSBOARDSIZE;
     std::vector<int> bestMove = {-1, -1}; // 初始无效位置
-    int alpha = -1000000;                 // 阿尔法初始值（极小）
-    int beta = 1000000;                   // 贝塔初始值（极大）
+
     std::vector<int> lastBestMove;
 
     int currentBoard[SIZE][SIZE];
@@ -397,6 +503,8 @@ std::vector<int> ChessAi::getBestMove(int aiColor, int maxDepth, int minDepth, i
 
     for (int depth = minDepth; depth <= maxDepth; depth++)
     {
+        int alpha = -1000000; // 阿尔法初始值（极小）
+        int beta = 1000000;   // 贝塔初始值（极大）
         // 检查是否超时
         auto now = std::chrono::steady_clock::now();
         auto elapsed = chrono::duration_cast<chrono::milliseconds>(now - startTime).count();
@@ -432,7 +540,7 @@ std::vector<int> ChessAi::getBestMove(int aiColor, int maxDepth, int minDepth, i
         // 本次搜索的最佳走法（临时）
         std::vector<int> currentBestMove;
 
-        int score = alphaBeta(currentBoard, depth, alpha, beta, aiColor, currentBestMove, true);
+        int score = alphaBeta(currentBoard, depth, alpha, beta, aiColor, currentBestMove, true, moves);
 
         if (!currentBestMove.empty())
         {
@@ -444,4 +552,118 @@ std::vector<int> ChessAi::getBestMove(int aiColor, int maxDepth, int minDepth, i
     }
 
     return bestMove;
+}
+
+// 输入：方向起点、方向、棋盘、当前玩家
+// 输出：该方向上所有5格窗口的总分（进攻+防守）
+int ChessAi::calcWindowScore(int x, int y, int dx, int dy, const int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSBOARDSIZE])
+{
+    const int SIZE = ChessGame::CHESSBOARDSIZE;
+    int totalScore = 0;
+    int windowLen = 5; // 五子棋核心：5格窗口
+
+    // 遍历当前方向上的所有可能的5格窗口
+    for (int step = 0; step <= 10; step++)
+    {                        // 15格棋盘，每个方向最多10个窗口
+        string pattern = ""; // 窗口内的棋型编码
+        bool outOfBound = false;
+
+        // 构建当前窗口的编码（5格）
+        for (int w = 0; w < windowLen; w++)
+        {
+            int nx = x + dx * (step + w);
+            int ny = y + dy * (step + w);
+            if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE)
+            {
+                outOfBound = true;
+                break;
+            }
+            // 转成字符：0=空，1=黑，2=白
+            pattern += to_string(board[nx][ny]);
+        }
+
+        if (outOfBound)
+            break; // 窗口出界，停止
+
+        // 匹配棋型分数（进攻分+防守分）
+        if (PATTERN_SCORE.count(pattern))
+        {
+            totalScore += PATTERN_SCORE.at(pattern);
+        }
+    }
+    return totalScore;
+}
+
+vector<vector<int>> ChessAi::findKillMoves(const int (&board)[ChessGame::CHESSBOARDSIZE][ChessGame::CHESSBOARDSIZE], int opponentColor)
+{
+    vector<vector<int>> killMoves;
+    const int SIZE = ChessGame::CHESSBOARDSIZE;
+    vector<vector<int>> allEmpty = generateMoves(board);
+
+    for (auto &move : allEmpty)
+    {
+        int x = move[0], y = move[1];
+        // 1. 模拟对手下这步，检测是否直接五连（一步杀）
+        int tempBoard[SIZE][SIZE];
+        copyBoard(board, tempBoard);
+        tempBoard[x][y] = opponentColor;
+        if (checkWin(tempBoard) == opponentColor)
+        {
+            killMoves.push_back(move);
+            continue;
+        }
+
+        // 2. 检测是否形成活四（下这步后，对手再下一次就五连）
+        bool isLiveFour = false;
+        const int dirs[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};
+        for (int d = 0; d < 4; d++)
+        {
+            int dx = dirs[d][0], dy = dirs[d][1];
+            // 统计当前方向的连续同色+空位
+            int forward = 0, forwardEmpty = 0;
+            int backward = 0, backwardEmpty = 0;
+
+            // 正方向
+            for (int i = 1; i < 5; i++)
+            {
+                int nx = x + dx * i, ny = y + dy * i;
+                if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE)
+                    break;
+                if (tempBoard[nx][ny] == opponentColor)
+                    forward++;
+                else if (tempBoard[nx][ny] == 0)
+                    forwardEmpty++;
+                else
+                    break;
+            }
+            // 反方向
+            for (int i = 1; i < 5; i++)
+            {
+                int nx = x - dx * i, ny = y - dy * i;
+                if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE)
+                    break;
+                if (tempBoard[nx][ny] == opponentColor)
+                    backward++;
+                else if (tempBoard[nx][ny] == 0)
+                    backwardEmpty++;
+                else
+                    break;
+            }
+
+            // 活四判定：连续4个同色 + 至少1个空位
+            int totalLen = forward + backward + 1;
+            if (totalLen == 4 && (forwardEmpty + backwardEmpty) >= 1)
+            {
+                isLiveFour = true;
+                break;
+            }
+        }
+
+        if (isLiveFour)
+        {
+            killMoves.push_back(move);
+        }
+    }
+
+    return killMoves;
 }

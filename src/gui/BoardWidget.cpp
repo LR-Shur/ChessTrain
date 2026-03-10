@@ -192,7 +192,7 @@ void BoardWidget::onAiMove()
     QtConcurrent::run([this]()
                       {
         // 后台计算最佳落点
-        std::vector<int> aiMove = m_ai->getBestMove(m_game->getAiColor(), 6, 2, 60000);
+        std::vector<int> aiMove = m_ai->getBestMove(m_game->getAiColor(), 4, 2, 10000);
         // 计算完成后切回主线程更新UI
         QMetaObject::invokeMethod(this, "onAiMoveFinished",
                                   Qt::QueuedConnection,

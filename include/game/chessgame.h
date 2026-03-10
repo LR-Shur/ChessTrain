@@ -10,7 +10,7 @@ class ChessGame
 private:
     static const int BLACKPLAYER = 1;
     static const int WHITEPLAYER = 2;
-    inline static const int CheckDIRECTIONS[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}}; // 用于检查胜利的四个方向
+    
     int board[15][15];
 
     int currentPlayer;                                                                 // 当前颜色
@@ -24,6 +24,7 @@ private:
 
 public:
     static const int CHESSBOARDSIZE = 15;
+    inline static const int CheckDIRECTIONS[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}}; // 用于检查胜利的四个方向
     ChessGame();
 
     void initBoard();
