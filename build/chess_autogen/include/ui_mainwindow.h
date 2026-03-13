@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -43,6 +44,10 @@ public:
     QLabel *label;
     QComboBox *firstMoveCombo;
     QPushButton *saveFirstMoveButton;
+    QCheckBox *useAzAiCheckBox;
+    QCheckBox *aiVsAiCheckBox;
+    QLabel *aiVsAiBlackLabel;
+    QComboBox *aiVsAiBlackCombo;
     QPlainTextEdit *infoTextEdit;
     QMenuBar *menubar;
     QMenu *menu_ai;
@@ -100,6 +105,31 @@ public:
 
         verticalLayout->addWidget(saveFirstMoveButton);
 
+        useAzAiCheckBox = new QCheckBox(verticalLayoutWidget);
+        useAzAiCheckBox->setObjectName("useAzAiCheckBox");
+        useAzAiCheckBox->setChecked(false);
+
+        verticalLayout->addWidget(useAzAiCheckBox);
+
+        aiVsAiCheckBox = new QCheckBox(verticalLayoutWidget);
+        aiVsAiCheckBox->setObjectName("aiVsAiCheckBox");
+        aiVsAiCheckBox->setChecked(false);
+
+        verticalLayout->addWidget(aiVsAiCheckBox);
+
+        aiVsAiBlackLabel = new QLabel(verticalLayoutWidget);
+        aiVsAiBlackLabel->setObjectName("aiVsAiBlackLabel");
+
+        verticalLayout->addWidget(aiVsAiBlackLabel);
+
+        aiVsAiBlackCombo = new QComboBox(verticalLayoutWidget);
+        aiVsAiBlackCombo->addItem(QString());
+        aiVsAiBlackCombo->addItem(QString());
+        aiVsAiBlackCombo->addItem(QString());
+        aiVsAiBlackCombo->setObjectName("aiVsAiBlackCombo");
+
+        verticalLayout->addWidget(aiVsAiBlackCombo);
+
         infoTextEdit = new QPlainTextEdit(verticalLayoutWidget);
         infoTextEdit->setObjectName("infoTextEdit");
 
@@ -153,6 +183,13 @@ public:
         firstMoveCombo->setItemText(2, QCoreApplication::translate("MainWindow", "\351\232\217\346\234\272", nullptr));
 
         saveFirstMoveButton->setText(QCoreApplication::translate("MainWindow", "\344\277\235\345\255\230\350\256\276\347\275\256", nullptr));
+        useAzAiCheckBox->setText(QCoreApplication::translate("MainWindow", "\344\275\277\347\224\250 AZai", nullptr));
+        aiVsAiCheckBox->setText(QCoreApplication::translate("MainWindow", "\345\217\214\346\226\271 AI \345\257\271\344\270\213", nullptr));
+        aiVsAiBlackLabel->setText(QCoreApplication::translate("MainWindow", "AI\345\257\271\344\270\213\351\273\221\346\226\271", nullptr));
+        aiVsAiBlackCombo->setItemText(0, QCoreApplication::translate("MainWindow", "\345\216\237\345\247\213AI\346\211\247\351\273\221", nullptr));
+        aiVsAiBlackCombo->setItemText(1, QCoreApplication::translate("MainWindow", "AZai\346\211\247\351\273\221", nullptr));
+        aiVsAiBlackCombo->setItemText(2, QCoreApplication::translate("MainWindow", "\351\232\217\346\234\272", nullptr));
+
         menu_ai->setTitle(QCoreApplication::translate("MainWindow", "\345\223\210\345\237\272\345\245\245\346\231\272\350\203\275\344\272\224\345\255\220\346\243\213\345\257\271\346\210\230ai", nullptr));
         menu_G->setTitle(QCoreApplication::translate("MainWindow", "\346\270\270\346\210\217(&G)", nullptr));
     } // retranslateUi

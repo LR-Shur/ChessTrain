@@ -2,6 +2,7 @@
 #include "BoardWidget.h"
 #include <QMouseEvent>
 #include <cmath>
+#include "../AZai/ai.h"
 
 // 构造函数
 BoardWidget::BoardWidget(ChessGame *game, QWidget *parent, ChessAi *chessAi)
@@ -22,10 +23,37 @@ void BoardWidget::setGame(ChessGame *game)
     update(); // 请求重绘棋盘
 }
 
+void BoardWidget::setClickEnabled(bool enabled)
+{
+    m_clickEnabled = enabled;
+}
+
+void BoardWidget::setUseAzAi(bool enabled)
+{
+    m_useAzAi = enabled;
+}
+
+void BoardWidget::setAiVsAi(bool enabled)
+{
+    m_aiVsAi = enabled;
+    m_clickEnabled = !enabled;
+}
+
+void BoardWidget::setAiVsAiAzBlack(bool azBlack)
+{
+    m_aiVsAiAzBlack = azBlack;
+}
+
 void BoardWidget::restart()
 {
     if (!m_game)
         return;
+
+    // 如果上一局 AI 仍在计算，先等待结束再重开，避免并发读写游戏状态。
+    if (m_aiFuture.isRunning())
+    {
+        m_aiFuture.waitForFinished();
+    }
 
     // 1. 重置所有状态（避免残留状态导致逻辑错误）
     m_clickEnabled = true;
@@ -35,8 +63,8 @@ void BoardWidget::restart()
 
     // 3. 重绘棋盘
     update();
-    // 4. 判断当前玩家是否是AI，若是则主动触发AI落子
-    if (isCurrentPlayerAi())
+    // 4. 判断是否需要主动触发AI落子
+    if (m_aiVsAi || isCurrentPlayerAi())
     {
         m_isAiTurn = true;
         m_clickEnabled = false; // AI回合禁用玩家点击
@@ -137,6 +165,9 @@ void BoardWidget::paintEvent(QPaintEvent *event)
 // 鼠标按下事件
 void BoardWidget::mousePressEvent(QMouseEvent *event)
 {
+    if (m_aiVsAi)
+        return;
+
     if (!m_clickEnabled || m_isAiTurn || !m_game)
         return;
     if (event->button() != Qt::LeftButton)
@@ -150,7 +181,6 @@ void BoardWidget::mousePressEvent(QMouseEvent *event)
     calculateBoardParams(cellSize, margin);
 
     // 将像素坐标转换为棋盘行列
-    // 公式： (像素坐标 - 边距) / 格子大小，然后四舍五入到最近的整数
     int col = std::round((x - margin) / (double)cellSize);
     int row = std::round((y - margin) / (double)cellSize);
 
@@ -162,37 +192,59 @@ void BoardWidget::mousePressEvent(QMouseEvent *event)
     // 尝试落子
     bool success = m_game->placePiece(row, col);
     if (!success)
-        return; // 落子失败（如位置已有棋子），直接返回
+        return;
 
-    // 落子成功，重绘棋盘
     update();
-
-    // 发射信号：通知主窗口下一个玩家是谁（因为 placePiece 已经切换了玩家）
     emit piecePlaced(m_game->getCurrentPlayer());
 
-    // 检查游戏是否结束
     checkGameOver();
 
-    // 7. 判断是否轮到AI落子
-    if (isCurrentPlayerAi() && !m_game->checkWinGlobal())
+    // 判断是否轮到AI落子
+    if ((m_aiVsAi || isCurrentPlayerAi()) && !m_game->checkWinGlobal())
     {
-        m_isAiTurn = true;      // 标记AI回合
-        m_clickEnabled = false; // 禁用玩家点击
+        m_isAiTurn = true;
+        m_clickEnabled = false;
         onAiMove();
     }
 }
 
 void BoardWidget::onAiMove()
 {
-    cout << "onaimove";
-    if (!m_game || !m_ai)
+    if (!m_game)
+        return;
+    if (!m_useAzAi && !m_ai)
+        return;
+    if (m_aiFuture.isRunning())
         return;
 
     // 将AI计算放到后台线程
-    QtConcurrent::run([this]()
-                      {
-        // 后台计算最佳落点
-        std::vector<int> aiMove = m_ai->getBestMove(m_game->getAiColor(), 4, 2, 10000);
+    m_aiFuture = QtConcurrent::run([this]()
+                                   {
+        std::vector<int> aiMove;
+        if (m_aiVsAi)
+        {
+            bool azTurn = (m_game->getCurrentPlayer() == B) ? m_aiVsAiAzBlack : !m_aiVsAiAzBlack;
+            if (azTurn)
+            {
+                // AZai 原始实现是全盘搜索，深度过大会明显卡顿。
+                aiMove = getAzBestMove(3);
+            }
+            else
+            {
+                m_game->setNextAiColor(m_game->getCurrentPlayer());
+                aiMove = m_ai->getBestMove(m_game->getAiColor(), 3, 2, 10000);
+            }
+        }
+        else if (m_useAzAi)
+        {
+            
+            aiMove = getAzBestMove(3);
+        }
+        else
+        {
+            m_game->setNextAiColor(m_game->getCurrentPlayer());
+            aiMove = m_ai->getBestMove(m_game->getAiColor(), 3, 2, 10000);
+        }
         // 计算完成后切回主线程更新UI
         QMetaObject::invokeMethod(this, "onAiMoveFinished",
                                   Qt::QueuedConnection,
@@ -232,9 +284,18 @@ void BoardWidget::onAiMoveFinished(std::vector<int> aiMove)
         checkGameOver(); // 检查游戏结束
     }
 
-    // 恢复玩家操作
+    emit piecePlaced(m_game->getCurrentPlayer());
+
+    // 恢复操作状态
     m_isAiTurn = false;
-    m_clickEnabled = true;
+    m_clickEnabled = !m_aiVsAi;
+
+    if (m_aiVsAi && !m_game->checkWinGlobal() && !m_game->isBoardFull())
+    {
+        m_isAiTurn = true;
+        m_clickEnabled = false;
+        onAiMove();
+    }
 }
 
 bool BoardWidget::isCurrentPlayerAi() const
@@ -243,4 +304,61 @@ bool BoardWidget::isCurrentPlayerAi() const
         return false;
     // 核心：当前玩家 == AI颜色 → 是AI回合
     return m_game->getCurrentPlayer() == m_game->getAiColor();
+}
+
+std::vector<int> BoardWidget::getAzBestMove(int depth) const
+{
+    if (!m_game)
+    {
+        return {-1, -1};
+    }
+
+    int before[BOARD_SIZE][BOARD_SIZE] = {0};
+    int pieceCount = 0;
+
+    for (int row = 0; row < BOARD_SIZE; ++row)
+    {
+        for (int col = 0; col < BOARD_SIZE; ++col)
+        {
+            int piece = m_game->getPieceAt(row, col);
+            Board[row][col] = piece;
+            before[row][col] = piece;
+            if (piece != 0)
+            {
+                ++pieceCount;
+            }
+        }
+    }
+
+    cot = pieceCount;
+    ::aiColor = m_game->getCurrentPlayer();
+    ::playerColor = (::aiColor == B) ? W : B;
+    ::isGameOver = false;
+
+    aiMove(depth, Board, ::aiColor);
+
+    for (int row = 0; row < BOARD_SIZE; ++row)
+    {
+        for (int col = 0; col < BOARD_SIZE; ++col)
+        {
+            if (before[row][col] == EMPTY && Board[row][col] == ::aiColor)
+            {
+                return {row, col};
+            }
+        }
+    }
+
+    // AZai 未识别到落点时，回退到首个空位，避免返回非法坐标。
+    for (int row = 0; row < BOARD_SIZE; ++row)
+    {
+        for (int col = 0; col < BOARD_SIZE; ++col)
+        {
+            if (before[row][col] == EMPTY)
+            {
+                return {row, col};
+            }
+        }
+    }
+
+    return {-1, -1};
 }

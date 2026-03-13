@@ -31,6 +31,18 @@ MainWindow::MainWindow(QWidget *parent, ChessGame *game, ChessAi *ai)
         connect(ui->saveFirstMoveButton, &QPushButton::clicked,
                 this, &MainWindow::onSaveAiMoveColor);
         connect(ui->newGameButton, &QPushButton::clicked, this, &MainWindow::onRestart);
+        connect(ui->useAzAiCheckBox, &QCheckBox::toggled,
+                this, &MainWindow::onUseAzAiToggled);
+        connect(ui->aiVsAiCheckBox, &QCheckBox::toggled,
+                this, &MainWindow::onAiVsAiToggled);
+
+        // 默认不使用 AZai
+        ui->useAzAiCheckBox->setChecked(false);
+        ui->aiVsAiCheckBox->setChecked(false);
+        ui->aiVsAiBlackCombo->setCurrentIndex(0);
+        m_boardWidget->setUseAzAi(false);
+        m_boardWidget->setAiVsAi(false);
+        m_boardWidget->setAiVsAiAzBlack(false);
         // 5. 初始化状态栏和信息区域
         statusBar()
             ->showMessage("当前玩家: 黑棋");
@@ -68,13 +80,18 @@ void MainWindow::onSaveAiMoveColor()
                 aiPlayer = (std::rand() % 2) + 1;
         }
 
-        m_game->setNextAiColor(aiPlayer); // 设置先手
+        m_game->setNextAiColor(aiPlayer); // 人机时设置AI颜色
+
+        // AI对下模式：设置黑方(先手)由哪种AI执子
+        m_aiVsAiAzBlack = resolveAiVsAiAzBlack();
+        m_boardWidget->setAiVsAiAzBlack(m_aiVsAiAzBlack);
 
         m_boardWidget->restart();
 
         QString aiStr = (aiPlayer == 1) ? "黑棋" : "白棋";
+        QString blackAiStr = m_aiVsAiAzBlack ? "AZai执黑" : "原始AI执黑";
         statusBar()->showMessage("当前ai: " + aiStr);
-        updateInfoText("ai设置为 " + aiStr + ",游戏重新开始");
+        updateInfoText("ai设置为 " + aiStr + ", AI对下先手设置: " + blackAiStr + ", 游戏重新开始");
 }
 
 void MainWindow::onPiecePlaced(int nextPlayer)
@@ -82,6 +99,41 @@ void MainWindow::onPiecePlaced(int nextPlayer)
         QString playerStr = (nextPlayer == 1) ? "黑棋" : "白棋";
         statusBar()->showMessage("当前玩家: " + playerStr);
         updateInfoText("轮到 " + playerStr);
+}
+
+void MainWindow::onUseAzAiToggled(bool checked)
+{
+        m_boardWidget->setUseAzAi(checked);
+        if (ui->aiVsAiCheckBox->isChecked())
+        {
+                updateInfoText("提示: 已开启双方AI对下, 人机模式的 AZai 开关当前不生效");
+                return;
+        }
+        QString mode = checked ? "AZai" : "原始AI";
+        updateInfoText("AI模式切换为: " + mode);
+}
+
+void MainWindow::onAiVsAiToggled(bool checked)
+{
+        m_boardWidget->setAiVsAi(checked);
+        m_aiVsAiAzBlack = resolveAiVsAiAzBlack();
+        m_boardWidget->setAiVsAiAzBlack(m_aiVsAiAzBlack);
+        QString mode = checked ? "双方AI对下(优先级高于AZai勾选)" : "人机对战";
+        updateInfoText("对战模式切换为: " + mode);
+}
+
+bool MainWindow::resolveAiVsAiAzBlack() const
+{
+        int index = ui->aiVsAiBlackCombo->currentIndex();
+        if (index == 1)
+        {
+                return true;
+        }
+        if (index == 2)
+        {
+                return (std::rand() % 2) == 1;
+        }
+        return false;
 }
 
 void MainWindow::onGameOver(int winner)

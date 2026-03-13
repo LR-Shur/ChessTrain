@@ -20,12 +20,14 @@ set(SOURCES
     src/gui/mainwindow.cpp
     src/game/chessgame.cpp
     src/ai/ChessAi.cpp
+    src/AZai/ai.cpp
 )
 set(HEADERS
     src/gui/BoardWidget.h
     src/gui/mainwindow.h
     include/game/ChessGame.h
     include/ai/ChessAi.h
+    src/AZai/ai.h
 )
 
 # 主可执行文件
@@ -37,6 +39,6 @@ include(CTest)
 enable_testing()
 add_executable(test_chess tests/test_game.cpp src/game/chessgame.cpp
     src/gui/mainwindow.h src/gui/mainwindow.cpp src/gui/mainwindow.ui
-    src/gui/BoardWidget.cpp src/ai/ChessAi.cpp)
+    src/gui/BoardWidget.cpp src/ai/ChessAi.cpp src/AZai/ai.cpp)
 target_link_libraries(test_chess Qt6::Widgets) # 添加测试
 add_test(NAME ChessTest COMMAND test_chess)

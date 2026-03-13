@@ -46,8 +46,9 @@ test_chess_autogen/timestamp: \
 	M:/c++/train,vs2023/chess/build/CMakeFiles/3.30.4/CMakeRCCompiler.cmake \
 	M:/c++/train,vs2023/chess/build/CMakeFiles/3.30.4/CMakeSystem.cmake \
 	M:/c++/train,vs2023/chess/build/test_chess_autogen/moc_predefs.h \
-	M:/c++/train,vs2023/chess/include/ai/ChessAi.h \
 	M:/c++/train,vs2023/chess/include/game/ChessGame.h \
+	M:/c++/train,vs2023/chess/src/AZai/ai.cpp \
+	M:/c++/train,vs2023/chess/src/AZai/ai.h \
 	M:/c++/train,vs2023/chess/src/ai/ChessAi.cpp \
 	M:/c++/train,vs2023/chess/src/game/chessgame.cpp \
 	M:/c++/train,vs2023/chess/src/gui/BoardWidget.cpp \

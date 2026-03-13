@@ -68,6 +68,11 @@ void ChessGame::initBoard()
 bool ChessGame::placePiece(int x, int y)
 {
 
+    if (x < 0 || x >= CHESSBOARDSIZE || y < 0 || y >= CHESSBOARDSIZE)
+    {
+        return false;
+    }
+
     if (board[x][y] != 0)
     {
         return false;

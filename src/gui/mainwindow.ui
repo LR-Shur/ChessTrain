@@ -73,6 +73,52 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="useAzAiCheckBox">
+            <property name="text">
+             <string>使用 AZai</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="aiVsAiCheckBox">
+            <property name="text">
+             <string>双方 AI 对下</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="aiVsAiBlackLabel">
+            <property name="text">
+             <string>AI对下黑方</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="aiVsAiBlackCombo">
+            <item>
+             <property name="text">
+              <string>原始AI执黑</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>AZai执黑</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>随机</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
            <widget class="QPlainTextEdit" name="infoTextEdit"/>
           </item>
          </layout>

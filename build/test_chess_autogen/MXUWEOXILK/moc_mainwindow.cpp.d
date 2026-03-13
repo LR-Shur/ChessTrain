@@ -1,6 +1,5 @@
 M:/c++/train,vs2023/chess/build/test_chess_autogen/MXUWEOXILK/moc_mainwindow.cpp: M:/c++/train,vs2023/chess/src/gui/mainwindow.h \
   M:/c++/train,vs2023/chess/build/test_chess_autogen/moc_predefs.h \
-  M:/c++/train,vs2023/chess/include/ai/ChessAi.h \
   M:/c++/train,vs2023/chess/include/game/ChessGame.h \
   M:/c++/train,vs2023/chess/include/game/chessgame.h \
   M:/c++/train,vs2023/chess/src/gui/BoardWidget.h \
